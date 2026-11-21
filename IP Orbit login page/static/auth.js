@@ -1,3 +1,7 @@
+// ==========================================
+// IP ORBIT - SUPABASE AUTHENTICATION
+// ==========================================
+
 const SUPABASE_URL = "https://ucygsrjjtivnnxrzudji.supabase.co";
 
 const SUPABASE_KEY = "sb_publishable_VtXMtMSqcNTrA8B42cF_bQ_SaKJM-hN";
@@ -17,66 +21,53 @@ const supabaseClient = window.supabase.createClient(
 );
 
 
-// SHOW MESSAGE
+// ==========================================
+// MESSAGE FUNCTION
+// ==========================================
+
 function showMessage(message, type = "success") {
+
     const box = document.getElementById("message");
 
     if (box) {
         box.textContent = message;
         box.className = "message " + type;
+    } else {
+        alert(message);
     }
 }
 
 
+// ==========================================
 // PASSWORD SHOW / HIDE
+// ==========================================
+
 function togglePassword(inputId, button) {
+
     const input = document.getElementById(inputId);
 
     if (!input) return;
 
     if (input.type === "password") {
+
         input.type = "text";
         button.textContent = "🙈";
+        button.setAttribute("aria-label", "Hide password");
+
     } else {
+
         input.type = "password";
         button.textContent = "👁";
+        button.setAttribute("aria-label", "Show password");
+
     }
 }
 
 
-// CHECK EMAIL CONFIRMATION
-async function checkEmailConfirmation() {
-
-    const params = new URLSearchParams(window.location.search);
-
-    if (params.get("verified") === "1") {
-
-        // Wait for Supabase to process the confirmation link
-        const { data } = await supabaseClient.auth.getSession();
-
-        if (data.session) {
-            await supabaseClient.auth.signOut();
-        }
-
-        showMessage(
-            "Email verified successfully! You can now log in.",
-            "success"
-        );
-
-        window.history.replaceState(
-            {},
-            document.title,
-            window.location.pathname
-        );
-
-        return true;
-    }
-
-    return false;
-}
-
-
+// ==========================================
 // REGISTER
+// ==========================================
+
 const registerForm = document.getElementById("registerForm");
 
 if (registerForm) {
@@ -86,60 +77,192 @@ if (registerForm) {
         event.preventDefault();
 
         const name = document.getElementById("fullName").value.trim();
+
         const email = document.getElementById("registerEmail").value.trim();
+
         const phone = document.getElementById("phoneNumber").value.trim();
+
         const password = document.getElementById("registerPassword").value;
+
         const confirmPassword = document.getElementById("confirmPassword").value;
 
-        if (password !== confirmPassword) {
-            showMessage("Passwords do not match.", "error");
+
+        // VALIDATION
+
+        if (!name || !email || !phone || !password || !confirmPassword) {
+
+            showMessage("Please fill in all fields.", "error");
             return;
+
         }
 
         if (!/^[0-9]{10}$/.test(phone)) {
+
             showMessage("Enter a valid 10-digit phone number.", "error");
             return;
+
         }
 
-        showMessage("Creating your account...", "info");
+        if (password.length < 6) {
 
-        const { data, error } = await supabaseClient.auth.signUp({
+            showMessage("Password must contain at least 6 characters.", "error");
+            return;
 
-            email: email,
+        }
 
-            password: password,
+        if (password !== confirmPassword) {
 
-            options: {
+            showMessage("Passwords do not match.", "error");
+            return;
 
-                emailRedirectTo: window.location.origin + "/login?verified=1",
+        }
 
-                data: {
-                    full_name: name,
-                    phone_number: phone
+
+        const submitButton = registerForm.querySelector('button[type="submit"]');
+
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = "Creating Account...";
+        }
+
+        showMessage("Creating your account. Please wait...", "info");
+
+
+        try {
+
+            const { data, error } = await supabaseClient.auth.signUp({
+
+                email: email,
+
+                password: password,
+
+                options: {
+
+                    emailRedirectTo: window.location.origin + "/login?verified=1",
+
+                    data: {
+                        full_name: name,
+                        phone_number: phone
+                    }
+
                 }
+
+            });
+
+
+            if (error) {
+
+                console.error("Signup error:", error);
+
+                showMessage("Registration failed: " + error.message, "error");
+
+                return;
 
             }
 
-        });
 
-        if (error) {
-            showMessage(error.message, "error");
-            return;
+            console.log("Signup response:", data);
+
+
+            if (data.session) {
+
+                showMessage(
+                    "Account created successfully! Redirecting...",
+                    "success"
+                );
+
+                setTimeout(() => {
+                    window.location.href = MAIN_WEBSITE;
+                }, 1500);
+
+            } else {
+
+                showMessage(
+                    "Registration successful! Check your inbox and spam folder. Click the Supabase confirmation link to verify your email.",
+                    "success"
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error("Unexpected signup error:", error);
+
+            showMessage("Something went wrong: " + error.message, "error");
+
+        } finally {
+
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = "Create Account";
+            }
+
         }
-
-        showMessage(
-            "Registration successful! Check your email and click Confirm email address.",
-            "success"
-        );
-
-        registerForm.reset();
 
     });
 
 }
 
 
+// ==========================================
+// EMAIL CONFIRMATION
+// ==========================================
+
+async function checkEmailConfirmation() {
+
+    const params = new URLSearchParams(window.location.search);
+
+    const authError = params.get("error_description");
+
+    if (authError) {
+
+        showMessage(
+            "Email verification failed: " + authError,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (params.get("verified") === "1") {
+
+        const { data, error } = await supabaseClient.auth.getSession();
+
+        if (error) {
+
+            showMessage(error.message, "error");
+            return;
+
+        }
+
+        if (data.session) {
+
+            await supabaseClient.auth.signOut();
+
+        }
+
+        showMessage(
+            "✓ EMAIL VERIFIED SUCCESSFULLY! YOU CAN NOW LOG IN.",
+            "success"
+        );
+
+        window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+        );
+
+    }
+
+}
+
+
+// ==========================================
 // LOGIN
+// ==========================================
+
 const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
@@ -149,25 +272,62 @@ if (loginForm) {
         event.preventDefault();
 
         const email = document.getElementById("loginEmail").value.trim();
+
         const password = document.getElementById("loginPassword").value;
+
 
         showMessage("Logging in...", "info");
 
-        const { data, error } =
-            await supabaseClient.auth.signInWithPassword({
+
+        const submitButton = loginForm.querySelector('button[type="submit"]');
+
+        if (submitButton) {
+            submitButton.disabled = true;
+        }
+
+
+        try {
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
 
                 email: email,
                 password: password
 
             });
 
-        if (error) {
-            showMessage(error.message, "error");
-            return;
-        }
 
-        if (data.session) {
-            window.location.href = MAIN_WEBSITE;
+            if (error) {
+
+                showMessage(error.message, "error");
+                return;
+
+            }
+
+
+            if (data.session) {
+
+                showMessage("Login successful! Redirecting...", "success");
+
+                setTimeout(() => {
+
+                    window.location.href = MAIN_WEBSITE;
+
+                }, 1000);
+
+            }
+
+        } catch (error) {
+
+            console.error("Login error:", error);
+
+            showMessage(error.message, "error");
+
+        } finally {
+
+            if (submitButton) {
+                submitButton.disabled = false;
+            }
+
         }
 
     });
@@ -175,7 +335,10 @@ if (loginForm) {
 }
 
 
+// ==========================================
 // FORGOT PASSWORD
+// ==========================================
+
 const forgotForm = document.getElementById("forgotForm");
 
 if (forgotForm) {
@@ -186,31 +349,52 @@ if (forgotForm) {
 
         const email = document.getElementById("forgotEmail").value.trim();
 
-        showMessage("Sending password recovery email...", "info");
+        showMessage("Sending recovery email...", "info");
 
-        const { error } =
-            await supabaseClient.auth.resetPasswordForEmail(email, {
 
-                redirectTo: window.location.origin + "/forgot-password"
+        try {
 
-            });
+            const { error } = await supabaseClient.auth.resetPasswordForEmail(
 
-        if (error) {
+                email,
+
+                {
+                    redirectTo: window.location.origin + "/forgot-password"
+                }
+
+            );
+
+
+            if (error) {
+
+                showMessage(error.message, "error");
+                return;
+
+            }
+
+
+            showMessage(
+                "Password recovery email sent! Check your inbox and spam folder.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error("Recovery email error:", error);
+
             showMessage(error.message, "error");
-            return;
-        }
 
-        showMessage(
-            "Password recovery email sent. Open the link in your email.",
-            "success"
-        );
+        }
 
     });
 
 }
 
 
-// UPDATE PASSWORD AFTER RECOVERY LINK
+// ==========================================
+// RESET PASSWORD
+// ==========================================
+
 const recoveryForm = document.getElementById("recoveryForm");
 
 if (recoveryForm) {
@@ -220,47 +404,96 @@ if (recoveryForm) {
         event.preventDefault();
 
         const password = document.getElementById("newPassword").value;
+
         const confirmPassword = document.getElementById("confirmNewPassword").value;
 
+
+        if (password.length < 6) {
+
+            showMessage("Password must contain at least 6 characters.", "error");
+            return;
+
+        }
+
         if (password !== confirmPassword) {
+
             showMessage("Passwords do not match.", "error");
             return;
+
         }
 
-        const { data } = await supabaseClient.auth.getSession();
 
-        if (!data.session) {
-            showMessage("Please open the password recovery link from your email.", "error");
-            return;
-        }
+        showMessage("Updating password...", "info");
 
-        const { error } = await supabaseClient.auth.updateUser({
-            password: password
-        });
 
-        if (error) {
+        try {
+
+            const { data: sessionData, error: sessionError } =
+                await supabaseClient.auth.getSession();
+
+
+            if (sessionError || !sessionData.session) {
+
+                showMessage(
+                    "Open the password recovery link from your email first.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            const { error } = await supabaseClient.auth.updateUser({
+
+                password: password
+
+            });
+
+
+            if (error) {
+
+                showMessage(error.message, "error");
+                return;
+
+            }
+
+
+            await supabaseClient.auth.signOut();
+
+
+            showMessage(
+                "Password updated successfully! Please log in.",
+                "success"
+            );
+
+
+            setTimeout(() => {
+
+                window.location.href = "/login";
+
+            }, 2000);
+
+
+        } catch (error) {
+
+            console.error("Password update error:", error);
+
             showMessage(error.message, "error");
-            return;
+
         }
-
-        await supabaseClient.auth.signOut();
-
-        showMessage("Password updated successfully. Please log in.", "success");
-
-        setTimeout(() => {
-            window.location.href = "/login";
-        }, 2000);
 
     });
 
 }
 
 
-// INITIAL PAGE CHECK
+// ==========================================
+// INITIAL PAGE LOAD
+// ==========================================
+
 document.addEventListener("DOMContentLoaded", async function() {
 
-    const confirmationHandled = await checkEmailConfirmation();
-
-    if (confirmationHandled) return;
+    await checkEmailConfirmation();
 
 });
