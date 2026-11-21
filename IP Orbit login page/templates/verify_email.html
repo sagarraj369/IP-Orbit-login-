@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email | IP Orbit</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+</head>
+<body>
+
+<header>
+    <div class="logo">IP<span>Orbit</span></div>
+    <div class="header-right">Network Information System</div>
+</header>
+
+<main class="auth-container">
+    <section class="auth-card">
+
+        <h1>Verify Your Email</h1>
+        <p>Enter the verification code sent to your email.</p>
+
+        <form id="verifyForm">
+
+            <div class="form-group">
+                <label for="verifyEmail">Email Address</label>
+                <input type="email" id="verifyEmail"
+                       placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="verifyOTP">Verification Code</label>
+                <input type="text" id="verifyOTP"
+                       placeholder="Enter 6-digit OTP"
+                       maxlength="6" pattern="[0-9]{6}"
+                       inputmode="numeric" required>
+            </div>
+
+            <button type="submit" class="primary-btn">
+                Verify Email
+            </button>
+
+        </form>
+
+        <div id="message" role="status" aria-live="polite"></div>
+
+        <div class="auth-switch">
+            <a href="{{ url_for('register') }}">Back to Registration</a>
+        </div>
+
+    </section>
+</main>
+
+<footer>© 2026 IP Orbit | Network Information System</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="{{ url_for('static', filename='auth.js') }}"></script>
+
+</body>
+</html>
