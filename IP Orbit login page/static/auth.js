@@ -497,3 +497,14 @@ document.addEventListener("DOMContentLoaded", async function() {
     await checkEmailConfirmation();
 
 });
+window.addEventListener("load", function () {
+    const loader = document.getElementById("loader");
+
+    if (loader) {
+        loader.classList.add("hide");
+
+        setTimeout(() => {
+            loader.style.display = "none";
+        }, 500);
+    }
+});
