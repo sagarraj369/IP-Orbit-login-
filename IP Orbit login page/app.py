@@ -32,6 +32,11 @@ def verify_email():
 def forgot_password():
     return render_template("forgot_password.html")
 
+#RESET PASSWORD
+@app.route("/reset-password")
+def reset_password():
+    return render_template("reset_password.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
