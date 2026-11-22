@@ -4,80 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="google-site-verification"
-          content="nBtkdhXkquUyNdQMEjjSucQVyRr0vD9NfRvSH8xco3o">
-
     <title>IP Orbit - Login</title>
-     <!-- Connect Login CSS -->
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='auth.css') }}">
-    
 </head>
+
 <body>
-    <!-- LOADING SCREEN -->
-<div id="loader">
-    <div class="loader-content">
-        <div class="loader-spinner"></div>
-        <h2>IP Orbit</h2>
-        <p>Loading, please wait...</p>
-    </div>
-</div>
 
-<header>
-    <div class="logo">IP<span>Orbit</span></div>
-    <div class="header-right">Network Information System</div>
-</header>
+    <!-- HEADER -->
+    <header class="auth-header">
+        <a href="/" class="logo">IP Orbit</a>
+        <a href="/" class="header-link">Home</a>
+    </header>
 
-<main class="auth-container">
-    <section class="auth-card">
+    <!-- LOGIN SECTION -->
+    <main class="auth-main">
 
-        <h1>Welcome Back</h1>
-        <p>Login to continue to IP Orbit</p>
+        <div class="auth-container">
 
-        <form id="loginForm">
+            <h1>Welcome Back</h1>
 
-            <div class="form-group">
-                <label for="loginEmail">Email Address</label>
-                <input type="email" id="loginEmail"
-                       placeholder="Enter your email" required>
-            </div>
+            <p class="auth-subtitle">
+                Login to continue to IP Orbit
+            </p>
 
-            <div class="form-group">
-                <label for="loginPassword">Password</label>
+            <div id="message"></div>
 
-                <div class="password-wrapper">
-                    <input type="password" id="loginPassword"
-                           placeholder="Enter your password" required>
+            <form id="loginForm" class="auth-form">
 
-                    <button type="button" class="toggle-password"
-                            onclick="togglePassword('loginPassword', this)"
-                            aria-label="Show password">👁</button>
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Enter your email"
+                        required>
                 </div>
-            </div>
 
-            <div class="forgot-link">
-                <a href="{{ url_for('forgot_password') }}">Forgot Password?</a>
-            </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
 
-            <button type="submit" class="primary-btn">Login</button>
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Enter your password"
+                            required>
 
-        </form>
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            onclick="togglePassword('loginPassword', this)">
+                            Show
+                        </button>
+                    </div>
+                </div>
 
-        <div id="message" role="status" aria-live="polite"></div>
+                <div class="forgot-password">
+                    <a href="/forgot-password">
+                        Forgot Password?
+                    </a>
+                </div>
 
-        <div class="auth-switch">
-            Don't have an account?
-            <a href="{{ url_for('register') }}">Create Account</a>
+                <button type="submit" class="auth-button">
+                    Login
+                </button>
+
+            </form>
+
+            <p class="auth-bottom-text">
+                Don't have an account?
+                <a href="/register">Create Account</a>
+            </p>
+
         </div>
 
-    </section>
-</main>
+    </main>
 
-<footer>© 2026 IP Orbit | Network Information System</footer>
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-bottom">
+            <p>© 2026 IP Orbit | Network Information System</p>
+            <p>Built By Sagar Raj</p>
+        </div>
+    </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="{{ url_for('static', filename='auth.js') }}"></script>
-<script src="{{ url_for('static', filename='loader.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="{{ url_for('static', filename='auth.js') }}"></script>
 
 </body>
 </html>
