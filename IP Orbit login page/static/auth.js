@@ -138,7 +138,7 @@ if (registerForm) {
 
                 options: {
 
-                    emailRedirectTo: window.location.origin + "/login?verified=1",
+                    emailRedirectTo: "http://iporbit-login.vercel.app/login?verified=1",
 
                     data: {
                         full_name: name,
