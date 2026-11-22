@@ -1,5 +1,7 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +9,29 @@
     <title>IP Orbit - Explore Your IP World</title>
 
     <meta name="description"
-          content="Explore your public IP address, network information, ISP details, and approximate location with IP Orbit.">
+          content="Explore public IP addresses, network information, ISP details, and approximate geographic information with IP Orbit.">
 
     <meta name="keywords"
-          content="IP Orbit, IP lookup, public IP address, IP information, network details">
+          content="IP Orbit, IP lookup, public IP address, IP information, network details, IP location">
 
     <meta name="author" content="IP Orbit">
 
+    <!-- GOOGLE SEARCH CONSOLE -->
     <meta name="google-site-verification"
           content="nBtkdhXkquUyNdQMEjjSucQVyRr0vD9NfRvSH8xco3o">
 
+    <!-- CSS -->
     <link rel="stylesheet"
           href="{{ url_for('static', filename='home.css') }}">
+
 </head>
 
 <body>
 
     <!-- HEADER -->
+
     <header class="header">
+
         <div class="container nav-container">
 
             <a href="/" class="logo">
@@ -32,20 +39,28 @@
             </a>
 
             <nav class="navigation">
+
                 <a href="/" class="active">Home</a>
+
                 <a href="#features">Features</a>
+
                 <a href="#about">About</a>
+
                 <a href="{{ url_for('login') }}" class="nav-login">
                     Login
                 </a>
+
             </nav>
 
         </div>
+
     </header>
 
 
-    <!-- HERO -->
+    <!-- HERO SECTION -->
+
     <section class="hero">
+
         <div class="container hero-content">
 
             <div class="hero-badge">
@@ -65,11 +80,13 @@
 
             <div class="hero-buttons">
 
-                <a href="{{ url_for('login') }}" class="btn btn-primary">
+                <a href="{{ url_for('login') }}"
+                   class="btn btn-primary">
                     Get Started
                 </a>
 
-                <a href="#features" class="btn btn-secondary">
+                <a href="#features"
+                   class="btn btn-secondary">
                     Explore Features
                 </a>
 
@@ -80,17 +97,21 @@
             </div>
 
         </div>
+
     </section>
 
 
-    <!-- FEATURES -->
+    <!-- FEATURES SECTION -->
+
     <section class="features-section" id="features">
 
         <div class="container">
 
             <div class="section-heading">
 
-                <span class="section-label">OUR FEATURES</span>
+                <span class="section-label">
+                    OUR FEATURES
+                </span>
 
                 <h2>Explore Your Network</h2>
 
@@ -105,6 +126,7 @@
             <div class="features-grid">
 
                 <div class="feature-card">
+
                     <div class="feature-icon">01</div>
 
                     <h3>IP Lookup</h3>
@@ -113,10 +135,12 @@
                         Find your public IP address and explore
                         basic information about it.
                     </p>
+
                 </div>
 
 
                 <div class="feature-card">
+
                     <div class="feature-icon">02</div>
 
                     <h3>Network Details</h3>
@@ -125,10 +149,12 @@
                         Explore available network information,
                         including ISP and hostname details.
                     </p>
+
                 </div>
 
 
                 <div class="feature-card">
+
                     <div class="feature-icon">03</div>
 
                     <h3>IP Geolocation</h3>
@@ -137,10 +163,12 @@
                         View an approximate location associated
                         with a public IP address.
                     </p>
+
                 </div>
 
 
                 <div class="feature-card">
+
                     <div class="feature-icon">04</div>
 
                     <h3>Simple Interface</h3>
@@ -149,22 +177,27 @@
                         Access IP information through a clean,
                         simple, and user-friendly interface.
                     </p>
+
                 </div>
 
             </div>
 
         </div>
+
     </section>
 
 
-    <!-- ABOUT -->
+    <!-- ABOUT SECTION -->
+
     <section class="about-section" id="about">
 
         <div class="container about-content">
 
             <div class="about-text">
 
-                <span class="section-label">ABOUT IP ORBIT</span>
+                <span class="section-label">
+                    ABOUT IP ORBIT
+                </span>
 
                 <h2>
                     Know More About Your Internet Connection
@@ -182,7 +215,8 @@
                     IP Orbit makes the experience simple.
                 </p>
 
-                <a href="{{ url_for('login') }}" class="btn btn-primary">
+                <a href="{{ url_for('login') }}"
+                   class="btn btn-primary">
                     Explore IP Orbit
                 </a>
 
@@ -192,7 +226,11 @@
             <div class="about-card">
 
                 <div class="orbit-circle">
-                    <div class="orbit-center">IP</div>
+
+                    <div class="orbit-center">
+                        IP
+                    </div>
+
                 </div>
 
                 <h3>Discover. Explore. Understand.</h3>
@@ -204,37 +242,44 @@
             </div>
 
         </div>
+
     </section>
 
 
     <!-- CALL TO ACTION -->
+
     <section class="cta-section">
 
         <div class="container cta-content">
 
-            <h2>Ready to Explore Your IP World?</h2>
+            <h2>
+                Ready to Explore Your IP World?
+            </h2>
 
             <p>
                 Get started with IP Orbit and explore your
                 public IP information.
             </p>
 
-            <a href="{{ url_for('register') }}" class="btn btn-white">
+            <a href="{{ url_for('register') }}"
+               class="btn btn-white">
                 Create Your Account
             </a>
 
         </div>
+
     </section>
 
 
     <!-- FOOTER -->
-<footer class="site-footer">
+
+    <footer class="site-footer">
 
         <div class="footer-content">
 
             <div class="footer-brand">
 
-                <h2>￣へ￣</h2>
+                <h2>IP ORBIT</h2>
 
                 <p>
                     Explore IP addresses. Understand networks.
@@ -242,6 +287,7 @@
                 </p>
 
             </div>
+
 
             <div class="footer-links">
 
@@ -255,35 +301,49 @@
 
                 </div>
 
+
                 <div class="footer-column">
 
                     <h3>Follow Us</h3>
 
                     <a href="https://github.com/sagarraj369"
                        target="_blank"
-                       rel="noopener noreferrer">GitHub</a>
+                       rel="noopener noreferrer">
+                        GitHub
+                    </a>
 
                     <a href="https://www.linkedin.com/in/sagarm369"
                        target="_blank"
-                       rel="noopener noreferrer">LinkedIn</a>
+                       rel="noopener noreferrer">
+                        LinkedIn
+                    </a>
 
                     <a href="https://www.instagram.com/thisissagarraj"
                        target="_blank"
-                       rel="noopener noreferrer">Instagram</a>
+                       rel="noopener noreferrer">
+                        Instagram
+                    </a>
 
                     <a href="https://x.com/_Sagar_Raj_369"
                        target="_blank"
-                       rel="noopener noreferrer">X (Twitter)</a>
+                       rel="noopener noreferrer">
+                        X (Twitter)
+                    </a>
 
                 </div>
+
 
                 <div class="footer-column">
 
                     <h3>Legal</h3>
 
-                    <a href="/terms">Terms of Service</a>
+                    <a href="/terms">
+                        Terms of Service
+                    </a>
 
-                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/privacy">
+                        Privacy Policy
+                    </a>
 
                 </div>
 
@@ -291,24 +351,24 @@
 
         </div>
 
-        <div class="footer-photo">
 
-            <img src="{{ url_for('static', filename='footer-photo.png') }}"
-                 alt="Profile Photo">
-
-        </div>
+        <!-- COPYRIGHT -->
 
         <div class="footer-bottom">
 
-            <p>© 2026 IP Orbit. All Rights Reserved.</p>
+            <p>
+                © 2026 IP Orbit. All Rights Reserved.
+            </p>
 
-            <p>Built By Sagar Raj</p>
+            <p>
+                Built By Sagar Raj
+            </p>
 
         </div>
 
     </footer>
-    
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="{{ url_for('static', filename='auth.js') }}"></script>
+
+
 </body>
 </html>
+```
