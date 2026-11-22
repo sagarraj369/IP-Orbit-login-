@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -229,41 +228,87 @@
 
 
     <!-- FOOTER -->
-    <footer class="footer">
+<footer class="site-footer">
 
-        <div class="container footer-content">
+        <div class="footer-content">
 
             <div class="footer-brand">
 
-                <a href="/" class="logo footer-logo">
-                    <span>IP</span> ORBIT
-                </a>
+                <h2>￣へ￣</h2>
 
                 <p>
-                    Explore your digital world with IP Orbit.
+                    Explore IP addresses. Understand networks.
+                    Discover geographic information.
                 </p>
 
             </div>
 
-
             <div class="footer-links">
 
-                <a href="/">Home</a>
-                <a href="#features">Features</a>
-                <a href="#about">About</a>
-                <a href="{{ url_for('login') }}">Login</a>
+                <div class="footer-column">
+
+                    <h3>Contact</h3>
+
+                    <a href="mailto:sagarrajbhanu6364@gmail.com">
+                        Email Us
+                    </a>
+
+                </div>
+
+                <div class="footer-column">
+
+                    <h3>Follow Us</h3>
+
+                    <a href="https://github.com/sagarraj369"
+                       target="_blank"
+                       rel="noopener noreferrer">GitHub</a>
+
+                    <a href="https://www.linkedin.com/in/sagarm369"
+                       target="_blank"
+                       rel="noopener noreferrer">LinkedIn</a>
+
+                    <a href="https://www.instagram.com/thisissagarraj"
+                       target="_blank"
+                       rel="noopener noreferrer">Instagram</a>
+
+                    <a href="https://x.com/_Sagar_Raj_369"
+                       target="_blank"
+                       rel="noopener noreferrer">X (Twitter)</a>
+
+                </div>
+
+                <div class="footer-column">
+
+                    <h3>Legal</h3>
+
+                    <a href="/terms">Terms of Service</a>
+
+                    <a href="/privacy">Privacy Policy</a>
+
+                </div>
 
             </div>
 
         </div>
 
+        <div class="footer-photo">
 
-        <div class="copyright">
-            Copyright 2026 IP Orbit. All rights reserved.
+            <img src="{{ url_for('static', filename='footer-photo.png') }}"
+                 alt="Profile Photo">
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>© 2026 IP Orbit. All Rights Reserved.</p>
+
+            <p>Built By Sagar Raj</p>
+
         </div>
 
     </footer>
-
+    
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="{{ url_for('static', filename='auth.js') }}"></script>
 </body>
 </html>
-```
