@@ -508,3 +508,66 @@ window.addEventListener("load", function () {
         }, 500);
     }
 });
+// =====================================
+// FORGOT PASSWORD - SUPABASE
+// =====================================
+
+const forgotPasswordForm =
+    document.getElementById("forgotPasswordForm");
+
+if (forgotPasswordForm) {
+
+    forgotPasswordForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+        const email =
+            document.getElementById("forgotEmail").value.trim();
+
+        const messageBox =
+            document.getElementById("message");
+
+        const button =
+            forgotPasswordForm.querySelector("button[type='submit']");
+
+        button.disabled = true;
+        button.textContent = "Sending...";
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.auth.resetPasswordForEmail(email, {
+
+                    redirectTo:
+                        "https://iporbit-login.vercel.app/reset-password"
+
+                });
+
+            if (error) {
+                throw error;
+            }
+
+            messageBox.className = "message success";
+
+            messageBox.textContent =
+                "If an account exists for this email, a password-reset link will be sent. Check your inbox and spam folder.";
+
+            forgotPasswordForm.reset();
+
+        } catch (error) {
+
+            messageBox.className = "message error";
+
+            messageBox.textContent =
+                error.message || "Unable to send reset email.";
+
+        } finally {
+
+            button.disabled = false;
+            button.textContent = "Send Reset Link";
+
+        }
+
+    });
+
+}
